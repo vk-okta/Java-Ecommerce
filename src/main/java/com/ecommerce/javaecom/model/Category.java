@@ -1,13 +1,33 @@
 package com.ecommerce.javaecom.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+// this annotation marks this Java class as an entity that should be mapped to a table in the database.
+// the name of the table will be same as class name
+@Entity
 public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
+
     private String categoryName;
+
+    // TODO
+    // find out why it is a good practice to have
+    // a default constructor in the Entity
+    public Category() {
+    }
 
     public Category(Long categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
+
+    // Getters and setters are used to set the value in db
+    // and that fetch the value from db
 
     public String getCategoryName() {
         return categoryName;
