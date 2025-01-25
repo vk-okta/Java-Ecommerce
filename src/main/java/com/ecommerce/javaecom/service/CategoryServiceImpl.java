@@ -1,14 +1,13 @@
 package com.ecommerce.javaecom.service;
 
+import com.ecommerce.javaecom.exceptions.APIExceptions;
+import com.ecommerce.javaecom.exceptions.ResourceNotFoundException;
 import com.ecommerce.javaecom.model.Category;
 import com.ecommerce.javaecom.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -17,18 +16,32 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
+
+        // if (categories.isEmpty()) {
+        //     throw new APIExceptions("No Categories created Yet!!!");
+        // }
+
+        return categories;
     }
 
     @Override
     public void createCategory(Category category) {
+        // check if a category with the same name exists or not
+        // we need to write a custom method to check this
+        Category findCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+
+        if (findCategory != null) {
+            throw new APIExceptions("Category with the name " + category.getCategoryName() + " already exists!!!");
+        }
+
         categoryRepository.save(category);
     }
 
     @Override
     public Category updateCategory(Long categoryId, Category category) {
         // the function of the below line is just to check if the category id exists or not
-        categoryRepository.findById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+        categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         // if the category exists, add the category id in category object
         category.setCategoryId(categoryId);
@@ -39,8 +52,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public String deleteCategory(Long categoryId) {
-        // find the category
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+        // using custom exception handler
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         // delete it
         categoryRepository.delete(category);

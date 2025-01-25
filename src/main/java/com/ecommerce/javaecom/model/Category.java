@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,17 +21,19 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
+    @NotBlank
+    @Size(min = 2, message = "must contain atleast 2 characters")
     private String categoryName;
 
     // TODO
     // find out why it is a good practice to have
     // a default constructor in the Entity
-    //public Category() {
+    // public Category() {
     //}
 
     // all the constructors, getters,setters will be added by lombok
 
-    //public Category(Long categoryId, String categoryName) {
+    // public Category(Long categoryId, String categoryName) {
     //    this.categoryId = categoryId;
     //    this.categoryName = categoryName;
     //}
@@ -37,19 +41,19 @@ public class Category {
     // Getters and setters are used to set the value in db
     // and that fetch the value from db
 
-    //public String getCategoryName() {
+    // public String getCategoryName() {
     //    return categoryName;
     //}
 
-    //public void setCategoryName(String categoryName) {
+    // public void setCategoryName(String categoryName) {
     //    this.categoryName = categoryName;
     //}
 
-    //public Long getCategoryId() {
+    // public Long getCategoryId() {
     //    return categoryId;
     //}
 
-    //public void setCategoryId(Long categoryId) {
+    // public void setCategoryId(Long categoryId) {
     //    this.categoryId = categoryId;
     //}
 }
