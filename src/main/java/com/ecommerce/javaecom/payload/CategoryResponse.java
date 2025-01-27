@@ -11,6 +11,14 @@ import java.util.List;
 @NoArgsConstructor
 public class CategoryResponse {
     private List<CategoryDTO> content;
+
+    // Pagination Metadata
+    private Integer pageNumber;
+    private Integer pageSize;
+    private Long totalElements;
+    private Integer totalPages;
+    private boolean lastPage;
+
 }
 
 // this dto is from client to server
