@@ -1,13 +1,13 @@
 package com.ecommerce.javaecom.controller;
 
-import com.ecommerce.javaecom.model.Category;
+import com.ecommerce.javaecom.payload.CategoryDTO;
+import com.ecommerce.javaecom.payload.CategoryResponse;
 import com.ecommerce.javaecom.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,32 +26,35 @@ public class CategoryController {
 
     @GetMapping("/public/categories")
     // @RequestMapping(value = "/public/categories", method = RequestMethod.GET)
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categories = categoryService.getAllCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    public ResponseEntity<CategoryResponse> getAllCategories() {
+        CategoryResponse categoryResponse = categoryService.getAllCategories();
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
     // Valid Annotation checks if the incoming request is meeting the constraints defined on the Model.
     // Also Valid here ensures that user do not get a 500 error when the validation on the Model level fails.
     @PostMapping("/public/categories")
-    public ResponseEntity<String> createCategory(@Valid @RequestBody Category category) {
-        categoryService.createCategory(category);
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO savedCategoryDTO = categoryService.createCategory(categoryDTO);
 
-        return new ResponseEntity<>("Category created successfully!!", HttpStatus.CREATED);
+        return new ResponseEntity<>(savedCategoryDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/public/categories/{categoryId}")
-    public ResponseEntity<String> updateCategory(@Valid @RequestBody Category category, @PathVariable Long categoryId) {
-        Category updatedCategory = categoryService.updateCategory(categoryId, category);
+    public ResponseEntity<CategoryDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable Long categoryId) {
+        CategoryDTO updatedCategoryDTO = categoryService.updateCategory(categoryId, categoryDTO);
 
-        return new ResponseEntity<>("Category with id: " + updatedCategory.getCategoryId() + " updated Successfully!!", HttpStatus.OK);
+        // return new ResponseEntity<>("Category with id: " + updatedCategory.getCategoryId() + " updated Successfully!!", HttpStatus.OK);
+        return new ResponseEntity<>(updatedCategoryDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
-        String message = categoryService.deleteCategory(categoryId);
+    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long categoryId) {
+        // String message = categoryService.deleteCategory(categoryId);
+        CategoryDTO deletedCategoryDTO = categoryService.deleteCategory(categoryId);
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        // return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseEntity<>(deletedCategoryDTO, HttpStatus.OK);
     }
 
 }
