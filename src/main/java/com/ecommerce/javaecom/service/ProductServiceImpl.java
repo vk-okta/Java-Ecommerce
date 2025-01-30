@@ -106,14 +106,16 @@ public class ProductServiceImpl implements ProductService {
         // get the existing product from db
         Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
-        // update the product info with the details from request body
-        existingProduct.setProductName(productDTO.getProductName());
-        existingProduct.setDescription(productDTO.getDescription());
-        existingProduct.setQuantity(productDTO.getQuantity());
-        existingProduct.setPrice(productDTO.getPrice());
-        existingProduct.setDiscount(productDTO.getDiscount());
+        Product product = modelMapper.map(productDTO, Product.class);
 
-        Double specialPrice = productDTO.getPrice() - ((productDTO.getDiscount() * 0.01) * productDTO.getPrice());
+        // update the product info with the details from request body
+        existingProduct.setProductName(product.getProductName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setDiscount(product.getDiscount());
+
+        Double specialPrice = product.getPrice() - ((product.getDiscount() * 0.01) * product.getPrice());
         existingProduct.setSpecialPrice(specialPrice);
 
         // save in DB
