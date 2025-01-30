@@ -9,4 +9,6 @@ public interface ProductService {
     ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder);
 
     ProductResponse searchByCategory(Long categoryId);
+
+    ProductResponse searchProductByKeyword(String keyword);
 }
