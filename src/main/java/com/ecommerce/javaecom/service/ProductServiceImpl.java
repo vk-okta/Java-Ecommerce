@@ -57,7 +57,6 @@ public class ProductServiceImpl implements ProductService {
         // List<Product> products = productPage.getContent();
         List<Product> products = productRepository.findAll();
 
-
         // map all the products into DTOs
         List<ProductDTO> productDTOS = products.stream().map(product -> modelMapper.map(product, ProductDTO.class)).toList();
 
@@ -99,5 +98,27 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setContent(productDTOS);
 
         return productResponse;
+    }
+
+    @Override
+    public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
+
+        // get the existing product from db
+        Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
+
+        // update the product info with the details from request body
+        existingProduct.setProductName(productDTO.getProductName());
+        existingProduct.setDescription(productDTO.getDescription());
+        existingProduct.setQuantity(productDTO.getQuantity());
+        existingProduct.setPrice(productDTO.getPrice());
+        existingProduct.setDiscount(productDTO.getDiscount());
+
+        Double specialPrice = productDTO.getPrice() - ((productDTO.getDiscount() * 0.01) * productDTO.getPrice());
+        existingProduct.setSpecialPrice(specialPrice);
+
+        // save in DB
+        Product updatedProduct = productRepository.save(existingProduct);
+
+        return modelMapper.map(updatedProduct, ProductDTO.class);
     }
 }
