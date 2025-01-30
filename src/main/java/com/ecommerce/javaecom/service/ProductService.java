@@ -1,7 +1,12 @@
 package com.ecommerce.javaecom.service;
 
-import org.springframework.stereotype.Service;
+import com.ecommerce.javaecom.payload.ProductDTO;
+import com.ecommerce.javaecom.payload.ProductResponse;
 
-@Service
 public interface ProductService {
+    ProductDTO addProduct(Long categoryId, ProductDTO productDTO);
+
+    ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder);
+
+    ProductResponse searchByCategory(Long categoryId);
 }
