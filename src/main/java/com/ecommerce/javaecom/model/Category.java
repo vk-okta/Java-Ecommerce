@@ -1,14 +1,13 @@
 package com.ecommerce.javaecom.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 // this annotation marks this Java class as an entity that should be mapped to a table in the database.
 // the name of the table will be same as class name
@@ -24,6 +23,9 @@ public class Category {
     @NotBlank
     @Size(min = 2, message = "must contain atleast 2 characters")
     private String categoryName;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Product> products;
 
     // TODO
     // find out why it is a good practice to have

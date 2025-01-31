@@ -3,6 +3,7 @@ package com.ecommerce.javaecom.service;
 import com.ecommerce.javaecom.exceptions.APIExceptions;
 import com.ecommerce.javaecom.exceptions.ResourceNotFoundException;
 import com.ecommerce.javaecom.model.Category;
+import com.ecommerce.javaecom.model.Product;
 import com.ecommerce.javaecom.payload.CategoryDTO;
 import com.ecommerce.javaecom.payload.CategoryResponse;
 import com.ecommerce.javaecom.repositories.CategoryRepository;
@@ -78,7 +79,24 @@ public class CategoryServiceImpl implements CategoryService {
         // the function of the below line is just to check if the category id exists or not
         categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
-        // if the category exists, add the category id in category object
+        /*
+         // check if similar category exists by name in the category
+         // to add this is doubt, since to check we need to fetch all categories
+         // putting a potential performance issue
+         boolean isNamePresent = false;
+         List<Category> categoriesInDB = categoryRepository.findAll();
+         for (Category categoryInDB : categoriesInDB) {
+             if (categoryInDB.getCategoryName().equals(category.getCategoryName()) && !categoryInDB.getCategoryId().equals(categoryId)) {
+                 isNamePresent = true;
+             }
+         }
+
+         if (isNamePresent) {
+             throw new APIExceptions("Category with the name " + category.getCategoryName() + " already exists!!!");
+         }
+         if the category exists, add the category id in category object
+        */
+
         category.setCategoryId(categoryId);
 
         // save in db

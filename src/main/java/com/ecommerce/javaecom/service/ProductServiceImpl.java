@@ -1,5 +1,6 @@
 package com.ecommerce.javaecom.service;
 
+import com.ecommerce.javaecom.exceptions.APIExceptions;
 import com.ecommerce.javaecom.exceptions.ResourceNotFoundException;
 import com.ecommerce.javaecom.model.Category;
 import com.ecommerce.javaecom.model.Product;
@@ -44,9 +45,23 @@ public class ProductServiceImpl implements ProductService {
         // map productDTO to class
         Product product = modelMapper.map(productDTO, Product.class);
 
-        Category findCategory = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+        Category categoryInDB = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
-        product.setCategory(findCategory);
+        // check if similar product exists by name in the category
+        boolean isNamePresent = false;
+        List<Product> productsInCategory = categoryInDB.getProducts();
+        for (Product productInCategory : productsInCategory) {
+            if (productInCategory.getProductName().equals(product.getProductName())) {
+                isNamePresent = true;
+                break;
+            }
+        }
+
+        if (isNamePresent) {
+            throw new APIExceptions("Product with the name " + product.getProductName() + " already exists in this category!!!");
+        }
+
+        product.setCategory(categoryInDB);
         product.setImage("default.png");
 
         Double specialPrice = product.getPrice() - ((product.getDiscount() * 0.01) * productDTO.getPrice());
@@ -117,6 +132,20 @@ public class ProductServiceImpl implements ProductService {
         Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
         Product product = modelMapper.map(productDTO, Product.class);
+
+        // check if similar product exists by name in the category
+        boolean isNamePresent = false;
+        List<Product> productsInCategory = existingProduct.getCategory().getProducts();
+        for (Product productInCategory : productsInCategory) {
+            if (productInCategory.getProductName().equals(product.getProductName()) && !productInCategory.getProductId().equals(productId)) {
+                isNamePresent = true;
+                break;
+            }
+        }
+
+        if (isNamePresent) {
+            throw new APIExceptions("Product with the name " + product.getProductName() + " already exists in this category!!!");
+        }
 
         // update the product info with the details from request body
         existingProduct.setProductName(product.getProductName());
