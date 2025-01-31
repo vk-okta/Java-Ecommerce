@@ -3,7 +3,6 @@ package com.ecommerce.javaecom.service;
 import com.ecommerce.javaecom.exceptions.APIExceptions;
 import com.ecommerce.javaecom.exceptions.ResourceNotFoundException;
 import com.ecommerce.javaecom.model.Category;
-import com.ecommerce.javaecom.model.Product;
 import com.ecommerce.javaecom.payload.CategoryDTO;
 import com.ecommerce.javaecom.payload.CategoryResponse;
 import com.ecommerce.javaecom.repositories.CategoryRepository;
