@@ -16,6 +16,8 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "users", uniqueConstraints = { // the username and email will be unique
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
@@ -28,7 +30,7 @@ public class User {
     private Long userId;
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(max = 20)
     @Column(name = "username")
     private String userName;
 
