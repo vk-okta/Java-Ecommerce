@@ -16,9 +16,6 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-// TODO: not in original proj these two setters added to remove error
-@Getter
-@Setter
 @Table(name = "users", uniqueConstraints = { // the username and email will be unique
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
