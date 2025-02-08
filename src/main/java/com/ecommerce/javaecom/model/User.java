@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Data
 @NoArgsConstructor
 @Getter
 @Setter
@@ -30,7 +28,7 @@ public class User {
     private Long userId;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(min = 3, max = 20)
     @Column(name = "username")
     private String userName;
 
@@ -45,7 +43,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public User(String password, String email, String userName) {
+    public User(String userName, String email, String password) {
         this.password = password;
         this.email = email;
         this.userName = userName;
@@ -64,7 +62,6 @@ public class User {
     // if this user is a seller, he would have 'n' products associated with him
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<Product> products = new HashSet<>();
-
 
     @Getter
     @Setter
