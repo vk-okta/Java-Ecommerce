@@ -1,13 +1,16 @@
-package com.ecommerce.javaecom.security.jwt;
+package com.ecommerce.javaecom.security.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 public class LoginRequest {
+    @NotBlank
     private String username;
 
+    @NotBlank
     private String password;
 
 }

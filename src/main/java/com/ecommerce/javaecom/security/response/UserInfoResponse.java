@@ -1,4 +1,4 @@
-package com.ecommerce.javaecom.security.jwt;
+package com.ecommerce.javaecom.security.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,13 +7,14 @@ import java.util.List;
 
 @Getter
 @Setter
-public class LoginResponse {
+public class UserInfoResponse {
+    private Long id;
     private String jwtToken;
-
     private String username;
     private List<String> roles;
 
-    public LoginResponse(String jwtToken, List<String> roles, String username) {
+    public UserInfoResponse(Long id, String jwtToken, List<String> roles, String username) {
+        this.id = id;
         this.jwtToken = jwtToken;
         this.roles = roles;
         this.username = username;
