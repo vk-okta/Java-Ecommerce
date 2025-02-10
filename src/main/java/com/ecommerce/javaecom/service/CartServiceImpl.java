@@ -16,7 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -110,6 +109,25 @@ public class CartServiceImpl implements CartService {
         cartResponse.setContent(cartDTOS);
 
         return cartResponse;
+    }
+
+    @Override
+    public CartDTO getCart(String email, Long cartId) {
+        Cart cart = cartRepository.findCartByEmailAndCartId(email, cartId);
+
+        // if you leave it like this the products [] will be empty, hence need to add cart DTo
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+
+        // cart.getCartItems().forEach(cartItem -> cartItem.getProduct().setQuantity(cartItem.getQuantity()));
+
+        List<ProductDTO> productDTOS = cart.getCartItems()
+                                           .stream()
+                                           .map(cartItem -> modelMapper.map(cartItem, ProductDTO.class))
+                                           .toList();
+
+        cartDTO.setProducts(productDTOS);
+
+        return cartDTO;
     }
 
     // changes product (in cart) to product DTO
