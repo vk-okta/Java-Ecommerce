@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -32,7 +33,7 @@ import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
-//@EnableMethodSecurity
+// @EnableMethodSecurity
 public class WebSecurityConfig {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
@@ -71,15 +72,16 @@ public class WebSecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->
-                                           auth.requestMatchers("/api/auth/**").permitAll()
-                                               .requestMatchers("/h2-console/**").permitAll()
-                                               .requestMatchers("/v3/api-docs/**").permitAll()
-                                               .requestMatchers("/api/admin/**").permitAll()
-                                               .requestMatchers("/api/public/**").permitAll()
-                                               .requestMatchers("/swagger-ui/**").permitAll()
-                                               .requestMatchers("/api/test/**").permitAll()
-                                               .requestMatchers("/images/**").permitAll()
-                                               .anyRequest().authenticated()
+                                           auth
+                                                   .requestMatchers("/api/auth/**").permitAll()
+                                                   .requestMatchers("/h2-console/**").permitAll()
+                                                   .requestMatchers("/v3/api-docs/**").permitAll()
+                                                   // .requestMatchers("/api/admin/**").permitAll()
+                                                   // .requestMatchers("/api/public/**").permitAll()
+                                                   .requestMatchers("/swagger-ui/**").permitAll()
+                                                   .requestMatchers("/api/test/**").permitAll()
+                                                   .requestMatchers("/images/**").permitAll()
+                                                   .anyRequest().authenticated()
             );
 
         http.authenticationProvider(authenticationProvider());
@@ -128,7 +130,6 @@ public class WebSecurityConfig {
             Set<Role> userRoles = Set.of(userRole);
             Set<Role> sellerRoles = Set.of(sellerRole);
             Set<Role> adminRoles = Set.of(userRole, sellerRole, adminRole);
-
 
             // Create users if not already present
             if (!userRepository.existsByUserName("user1")) {
