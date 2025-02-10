@@ -60,6 +60,11 @@ public class JwtUtils {
         return ResponseCookie.from(jwtCookieName, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(false).build();
     }
 
+    // this creates a cookie without any jwt token, so a blank cookie
+    public ResponseCookie generateCleanJwtCookie() {
+        return ResponseCookie.from(jwtCookieName, null).path("/api").build();
+    }
+
     public String generateTokenFromUsername(String username) {
         return Jwts.builder()
                    .subject(username)

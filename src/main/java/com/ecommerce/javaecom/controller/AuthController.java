@@ -77,6 +77,14 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(response);
     }
 
+    @PostMapping("/signout")
+    public ResponseEntity<?> signOutUser() {
+        ResponseCookie blankCookie = jwtUtils.generateCleanJwtCookie();
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, blankCookie.toString()).body(new MessageResponse("Signed out successfully"));
+
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUserName(signupRequest.getUsername())) {
@@ -124,4 +132,24 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User Registered Successfully!"));
 
     }
+
+    @GetMapping("/username")
+    public String getCurrentUserName(Authentication authentication) {
+        if (authentication == null)
+            return "";
+
+        return authentication.getName();
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getCurrentUserDetails(Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+
+        UserInfoResponse response = new UserInfoResponse(userDetails.getId(), userDetails.getUsername(), roles);
+
+        return ResponseEntity.ok().body(response);
+    }
+
 }
