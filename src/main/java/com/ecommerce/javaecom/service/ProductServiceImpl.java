@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private FileService fileService;
 
-    // this will pull the value from application.properties file
+    // this will pull the value from application.yaml file
     @Value("${project.image}")
     private String path;
 

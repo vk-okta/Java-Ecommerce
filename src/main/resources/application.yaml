@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: java-ecom
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+  app:
+    jwtSecret: averylongsecretkeywhichIwanttousetoremovetheerrorsoitworks
+    jwtExpirationMs: 500000
+    jwtCookieName: authCookie
+  main:
+    banner-mode: OFF
+
+project:
+  image: images/
+
+logging:
+  level:
+    root: WARN
+    org.springframework: OFF
+    org.hibernate.SQL: OFF
+    springframework.security: OFF
+    com.ecommerce.javaecom: OFF
+
