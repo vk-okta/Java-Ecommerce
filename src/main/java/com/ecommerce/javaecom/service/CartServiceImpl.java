@@ -6,6 +6,7 @@ import com.ecommerce.javaecom.model.Cart;
 import com.ecommerce.javaecom.model.CartItem;
 import com.ecommerce.javaecom.model.Product;
 import com.ecommerce.javaecom.payload.CartDTO;
+import com.ecommerce.javaecom.payload.CartResponse;
 import com.ecommerce.javaecom.payload.ProductDTO;
 import com.ecommerce.javaecom.repositories.CartItemRepository;
 import com.ecommerce.javaecom.repositories.CartRepository;
@@ -15,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -83,6 +85,31 @@ public class CartServiceImpl implements CartService {
         cartDTO.setProducts(productDTOStream.toList());
 
         return cartDTO;
+    }
+
+    @Override
+    public CartResponse getAllCarts() {
+        List<Cart> carts = cartRepository.findAll();
+
+        // convert cart to CartDTO
+        List<CartDTO> cartDTOS = carts.stream().map(cart -> {
+            CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+
+            // for every cart, convert the products in cart items to product DTO
+            List<ProductDTO> productDTOS = cart.getCartItems()
+                                               .stream()
+                                               .map(cartItem -> modelMapper.map(cartItem, ProductDTO.class))
+                                               .toList();
+
+            cartDTO.setProducts(productDTOS);
+
+            return cartDTO;
+        }).toList();
+
+        CartResponse cartResponse = new CartResponse();
+        cartResponse.setContent(cartDTOS);
+
+        return cartResponse;
     }
 
     // changes product (in cart) to product DTO
