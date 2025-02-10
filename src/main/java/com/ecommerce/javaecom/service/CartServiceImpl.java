@@ -16,7 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -72,16 +71,29 @@ public class CartServiceImpl implements CartService {
         // save cart item
         cartItemRepository.save(newCartItem);
 
+        // TODO: why this is needed when there is a new cart but not when for existing cart
+        cart.getCartItems().add(newCartItem);
+
         // return the updated cart
         // product.setQuantity(product.getQuantity());
         cart.setTotalPrice(cart.getTotalPrice() + (product.getSpecialPrice() * quantity));
         cartRepository.save(cart);
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
-        Stream<ProductDTO> productDTOStream = getProductDTOStream(cart);
+
+        // change all products in cart to ProductDTO
+        List<ProductDTO> productDTOList = cart.getCartItems()
+                                              .stream()
+                                              .map(item -> {
+                                                       ProductDTO map = modelMapper.map(item, ProductDTO.class);
+                                                       // don't take the product quantity in stock, take the quantity in cart
+                                                       map.setQuantity(item.getQuantity());
+                                                       return map;
+                                                   }
+                                              ).toList();
 
         // add List of ProductDTOs in CartDTO
-        cartDTO.setProducts(productDTOStream.toList());
+        cartDTO.setProducts(productDTOList);
 
         return cartDTO;
     }
@@ -128,19 +140,6 @@ public class CartServiceImpl implements CartService {
         cartDTO.setProducts(productDTOS);
 
         return cartDTO;
-    }
-
-    // changes product (in cart) to product DTO
-    private Stream<ProductDTO> getProductDTOStream(Cart cart) {
-        List<CartItem> cartItems = cart.getCartItems();
-
-        return cartItems.stream().map(item -> {
-                                          ProductDTO map = modelMapper.map(item, ProductDTO.class);
-                                          // don't take the product quantity in stock, take the quantity in cart
-                                          map.setQuantity(item.getQuantity());
-                                          return map;
-                                      }
-        );
     }
 
     private Cart createCart() {
