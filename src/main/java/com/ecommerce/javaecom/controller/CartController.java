@@ -6,7 +6,6 @@ import com.ecommerce.javaecom.payload.CartResponse;
 import com.ecommerce.javaecom.repositories.CartRepository;
 import com.ecommerce.javaecom.service.CartService;
 import com.ecommerce.javaecom.util.AuthUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +48,21 @@ public class CartController {
         CartDTO cartDTO = cartService.getCart(email, cartId);
 
         return new ResponseEntity<CartDTO>(cartDTO, HttpStatus.OK);
+    }
+
+    // update quantity in my cart
+    @PutMapping("/cart/products/{productId}/quantity/{operation}")
+    public ResponseEntity<CartDTO> updateCartProduct(@PathVariable Long productId, @PathVariable String operation) {
+        CartDTO cartDTO = cartService.updateProductQuantityInCart(productId, operation.equalsIgnoreCase("delete") ? -1 : 1);
+
+        return new ResponseEntity<>(cartDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/carts/{cartId}/product/{productId}")
+    public ResponseEntity<String> deleteProductFromCart(@PathVariable Long cartId, @PathVariable Long productId) {
+        String status = cartService.deleteProductFromCart(cartId, productId);
+
+        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
 }

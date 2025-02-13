@@ -12,6 +12,8 @@ spring:
     jwtCookieName: authCookie
   main:
     banner-mode: OFF
+  jpa:
+    show-sql: off
 
 project:
   image: images/
