@@ -128,7 +128,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDTO getCart(String email, Long cartId) {
-        Cart cart = cartRepository.findCartByEmailAndCartId(email, cartId);
+
+        // if cartId is -1, the cart is not created yet, create a new cart for this user
+        Cart cart = cartId == -1 ? cart = createCart() : cartRepository.findCartByEmailAndCartId(email, cartId);
 
         // if you leave it like this the products [] will be empty, hence need to add cart DTo
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);

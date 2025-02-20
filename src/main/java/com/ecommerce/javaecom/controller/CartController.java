@@ -43,7 +43,7 @@ public class CartController {
         String email = authUtil.loggedInEmail();
 
         Cart cart = cartRepository.findCartByEmail(email);
-        Long cartId = cart.getCartId();
+        Long cartId = cart != null ? cart.getCartId() : -1;
 
         CartDTO cartDTO = cartService.getCart(email, cartId);
 
