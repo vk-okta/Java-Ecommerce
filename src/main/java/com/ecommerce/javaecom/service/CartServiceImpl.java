@@ -220,11 +220,11 @@ public class CartServiceImpl implements CartService {
             throw new APIExceptions("Product " + productId + " is not available in the cart");
         }
 
-        cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getProductPrice() * cartItem.getQuantity()));
+        cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getProductSpecialPrice() * cartItem.getQuantity()));
 
         cartItemRepository.deleteCartItemByProductIdAndCartId(cartId, productId);
 
-        return "Product " + cartItem.getProduct().getProductName() + " has been removed from the cart";
+        return "Product has been removed from the cart";
     }
 
     @Override
@@ -241,10 +241,11 @@ public class CartServiceImpl implements CartService {
             throw new APIExceptions("Product " + productId + " is not available in the cart");
         }
 
+        cartItem.setDiscount(product.getDiscount());
+        cartItem.setProductPrice(product.getPrice());
         cartItem.setProductSpecialPrice(product.getSpecialPrice());
 
-        double cartPrice = cart.getTotalPrice() - (cartItem.getProductPrice() * cartItem.getQuantity());
-        cart.setTotalPrice(cartPrice + (cartItem.getProductSpecialPrice() * cartItem.getQuantity()));
+        cart.setTotalPrice(cartItem.getProductSpecialPrice() * cartItem.getQuantity());
 
         cartItemRepository.save(cartItem);
     }
