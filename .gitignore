@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 
 images/
+secrets.yaml
 
 ### STS ###
 .apt_generated

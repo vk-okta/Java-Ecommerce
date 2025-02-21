@@ -1,18 +1,16 @@
 spring:
+  config:
+    import: "file:secrets.yaml"
   application:
     name: java-ecom
   h2:
     console:
       enabled: true
-  datasource:
-    url: jdbc:h2:mem:testdb
-  app:
-    jwtSecret: averylongsecretkeywhichIwanttousetoremovetheerrorsoitworks
-    jwtExpirationMs: 500000
-    jwtCookieName: authCookie
   main:
     banner-mode: OFF
   jpa:
+    hibernate:
+      ddl-auto: update
     show-sql: off
 
 project:
