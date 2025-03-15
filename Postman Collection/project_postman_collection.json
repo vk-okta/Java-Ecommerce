@@ -1,0 +1,848 @@
+{
+	"info": {
+		"_postman_id": "6ba568f3-524d-4f6c-9a8a-6c388a61272f",
+		"name": "Java E-com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29579750"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/public/categories",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryName\": \"clothes\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/public/categories",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryName\": \"shopping updates\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/public/categories/{{categoryId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"categories",
+								"{{categoryId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/admin/categories/{{categoryId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"categories",
+								"{{categoryId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/public/products",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"products"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product to Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productName\": \"shirts\",\n    \"description\": \"trendy-shirts\",\n    \"quantity\": 10,\n    \"price\": 500,\n    \"discount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/admin/categories/{{categoryId}}/products",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"categories",
+								"{{categoryId}}",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/public/categories/{{categoryId}}/products",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"categories",
+								"{{categoryId}}",
+								"products"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "productName",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by Keyword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/public/products/keyword/{{keyword}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"products",
+								"keyword",
+								"{{keyword}}"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "productName",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productName\": \"test-3\",\n    \"description\": \"this is a test desc\",\n    \"quantity\": 100,\n    \"price\": 1000.0,\n    \"discount\": 10.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/admin/products/{{productId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Image",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/vivek.giri/Downloads/imgs/user3.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/admin/products/{{productId}}/image",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"{{productId}}",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/admin/products/{{productId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Sign-In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user1\",\n    \"password\": \"password1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/auth/signin",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign-Out",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/auth/signout",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign-Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user2\",\n    \"password\": \"password\",\n    \"email\": \"user33@gmail.com\",\n    \"roles\": [\"seller\", \"admin\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/auth/signup",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Username",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/auth/username",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"username"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Details",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user1\",\n    \"password\": \"password1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/auth/user",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Add Product to Cart",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/carts/products/{{productId}}/quantity/{{quantity}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"products",
+								"{{productId}}",
+								"quantity",
+								"{{quantity}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Quantity in Cart",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/cart/products/{{productId}}/quantity/{{operation}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"products",
+								"{{productId}}",
+								"quantity",
+								"{{operation}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product From Cart",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/carts/{{cartId}}/product/{{productId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"{{cartId}}",
+								"product",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Carts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/carts",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/carts/users/cart",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"users",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Create Address",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"country\": \"India\",\n    \"state\": \"Rajasthan\",\n    \"city\": \"Jaisalmer\",\n    \"street\": \"chaudi-gali\",\n    \"buildingName\": \"purani-haveli\",\n    \"pinCode\": \"322123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/addresses",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Addresses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/addresses",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/addresses/{{addressId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"addresses",
+								"{{addressId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Addresses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/users/addresses",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Address",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"country\": \"India\",\n    \"state\": \"Bengal\",\n    \"city\": \"Darjeeling\",\n    \"street\": \"bakers-street\",\n    \"buildingName\": \"amar-bari\",\n    \"pinCode\": \"334322\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/addresses/{{addressId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"addresses",
+								"{{addressId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Address",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{java-ecom-url}}/api/addresses/{{addressId}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"addresses",
+								"{{addressId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Place Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addressId\": 1,\n    \"pg_id\": \"razorpay-ddofn3n3lj-89379\",\n    \"pg_name\": \"Razorpay\",\n    \"pg_status\": \"Accepted\",\n    \"pg_response_message\": \"payment successful\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{java-ecom-url}}/api/order/users/payments/{{paymentMethod}}",
+							"host": [
+								"{{java-ecom-url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"users",
+								"payments",
+								"{{paymentMethod}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "java-ecom-url",
+			"value": "http://localhost:8080",
+			"type": "default"
+		}
+	]
+}
